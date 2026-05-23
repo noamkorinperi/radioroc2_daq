@@ -55,6 +55,7 @@ I2C_HandleTypeDef hi2c1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim3;   /* 1-second tick — configured by timers_start_1s_tick() */
 
 /* USER CODE BEGIN PV */
 
@@ -533,34 +534,20 @@ static void MX_GPIO_Init(void)
 
 /**
  * @brief  TIM period elapsed callback.
- *         Handles both TIM1 (HAL timebase) and TIM3 (1-second tick).
- *         IMPORTANT: CubeMX generates a version of this in main.c
- *         for TIM1 only. This replaces it — do NOT have two
- *         definitions of HAL_TIM_PeriodElapsedCallback.
+ *         Handles TIM3 (1-second tick for temperature / DAC update).
+ *         SysTick_Handler in stm32f7xx_it.c calls HAL_IncTick() —
+ *         do NOT add an HAL_IncTick() call here for TIM1.
  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  if (htim->Instance == TIM1)
-  {
-    HAL_IncTick();   /* required for HAL_Delay and HAL_GetTick */
-  }
   if (htim->Instance == TIM3)
   {
     timers_on_tim3_elapsed();   /* sets 1-second flag for main loop */
   }
 }
 
-/**
- * @brief  EXTI0 IRQ handler — NOR_T1OC falling edge (PA0).
- *         Calls daq_exti0_irq_handler() which sets g_event_pending.
- *         NOTE: stm32f7xx_it.c also has EXTI0_IRQHandler generated
- *         by CubeMX. Add the call there instead if preferred.
- */
-void EXTI0_IRQHandler(void)
-{
-  HAL_GPIO_EXTI_IRQHandler(NOR_T1OC_Pin);
-  daq_exti0_irq_handler();
-}
+/* NOTE: EXTI0_IRQHandler is defined in stm32f7xx_it.c.
+ *       It calls daq_exti0_irq_handler() to set g_event_pending. */
 
 /* USER CODE END 4 */
 

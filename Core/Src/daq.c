@@ -110,8 +110,9 @@ void daq_process_event(void)
         /* Only read ADC if this channel is active */
         if (channel_map_active(mux_pos)) {
 
-            /* ADC sampling happens during the 30µs pulse window.
-             * After the pulse, the MUX output is stable → read. */
+            /* The CK_READ pulse has completed (timers_ck_read_pulse blocks
+             * until the pulse is finished).  The MUX output is now stable
+             * at mux_pos → read ADC. */
             uint16_t hg = daq_read_adc_hg();
             uint16_t lg = daq_read_adc_lg();
 

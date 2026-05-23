@@ -80,7 +80,7 @@ float compensation_get_temperature(void)
     ADC_ChannelConfTypeDef cfg = {0};
     cfg.Channel      = ADC_CHANNEL_TEMPSENSOR;
     cfg.Rank         = ADC_REGULAR_RANK_1;
-    cfg.SamplingTime = ADC_SAMPLETIME_84CYCLES;
+    cfg.SamplingTime = ADC_SAMPLING_CYCLES_TEMP;
     HAL_ADC_ConfigChannel(&hadc1, &cfg);
 
     HAL_ADC_Start(&hadc1);

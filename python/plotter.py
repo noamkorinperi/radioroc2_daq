@@ -62,12 +62,17 @@ class HistogramPlotter:
         self._fig.suptitle("RADIOROC2 — Energy Spectrum",
                            fontsize=13, fontweight="bold")
 
+        # Bin centres: midpoint of each uniform bin [0, energy_max]
+        # Each bin has width = energy_max / bins, so centres start at
+        # half a bin-width and end at energy_max minus half a bin-width.
+        half_bin = energy_max / (2 * bins)
+        centres = np.linspace(half_bin, energy_max - half_bin, bins)
+
         # Initialise subplots
         self._bars_per_ch = {}
         for i, ch in enumerate(channels):
             ax    = self._axes[i]
             color = CHANNEL_COLOURS[i % len(CHANNEL_COLOURS)]
-            centres = np.linspace(0, energy_max, bins)
             bars = ax.bar(centres, np.zeros(bins),
                           width=energy_max / bins,
                           color=color, alpha=0.75,
@@ -80,7 +85,6 @@ class HistogramPlotter:
 
         # Combined subplot (last)
         ax_comb = self._axes[-1]
-        centres = np.linspace(0, energy_max, bins)
         self._bars_combined = ax_comb.bar(
             centres, np.zeros(bins),
             width=energy_max / bins,

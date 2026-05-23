@@ -103,10 +103,12 @@
  * Total per channel: 27.3 µs
  *
  * Temperature sensor sampling:
- *   84 cycles = 4.7 µs (STM32 datasheet minimum: 10 µs)
+ *   480 cycles = 26.7 µs
+ *   STM32F7 datasheet minimum is 10 µs — 480 cycles gives safe margin.
+ *   (84 cycles = 4.7 µs was previously used and violated the spec.)
  * ================================================================ */
 #define ADC_SAMPLING_CYCLES_SH    ADC_SAMPLETIME_480CYCLES
-#define ADC_SAMPLING_CYCLES_TEMP  ADC_SAMPLETIME_84CYCLES
+#define ADC_SAMPLING_CYCLES_TEMP  ADC_SAMPLETIME_480CYCLES
 
 /* ================================================================
  * 5. TIMING CONSTANTS

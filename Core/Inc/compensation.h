@@ -23,13 +23,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/* ---------------------------------------------------------------
- * Calibration factor
- * S_T_REF: ADC counts per keV at T_REF (27°C).
- * Determined experimentally with a known gamma source (e.g. Cs-137
- * at 662 keV). Update this value after calibration.
- * --------------------------------------------------------------- */
-#define S_T_REF   3.1f   /* ADC counts/keV at 27°C — CALIBRATE EXPERIMENTALLY */
+/* NOTE: S_T_REF is defined in config.h (included via compensation.h → config.h).
+ *       Do not redefine it here. */
 
 /* ---------------------------------------------------------------
  * Function prototypes

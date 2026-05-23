@@ -73,7 +73,11 @@ void usb_comm_send_event(uint8_t channel, float energy_kev)
     pkt[5] = kev_bytes[3];
     pkt[6] = calc_checksum(&pkt[1], 5);
 
-    CDC_Transmit_FS(pkt, USB_PKT_SIZE);
+    /* Ignore USBD_BUSY intentionally: if the USB IN endpoint is still
+     * transmitting the previous packet, we drop this event rather than
+     * blocking.  At 2 MHz USB FS the window is <1 ms and is extremely
+     * rare in practice.  A more robust solution would use a FIFO. */
+    (void)CDC_Transmit_FS(pkt, USB_PKT_SIZE);
 
     /* Update histogram trigger counter */
     if (energy_kev > 0.0f) {   /* ignore invalid events */
@@ -101,7 +105,7 @@ void usb_comm_send_histogram_ready(void)
         USB_PKT_START_EVENT, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00
     };
     pkt[6] = calc_checksum(&pkt[1], 5);
-    CDC_Transmit_FS(pkt, USB_PKT_SIZE);
+    (void)CDC_Transmit_FS(pkt, USB_PKT_SIZE);
 
     /* Reset time window for TIME mode */
     s_time_start_ms = HAL_GetTick();

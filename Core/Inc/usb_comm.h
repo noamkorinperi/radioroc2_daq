@@ -94,4 +94,14 @@ void usb_comm_poll_commands(void);
  */
 bool usb_comm_histogram_due(void);
 
+/**
+ * @brief  USB CDC receive hook — call from CDC_Receive_FS() in
+ *         usbd_cdc_if.c (inside the USER CODE section).
+ *         Copies the received bytes into the internal command buffer
+ *         and sets the ready flag for usb_comm_poll_commands().
+ * @param  buf  Pointer to received data
+ * @param  len  Number of bytes received
+ */
+void usb_comm_on_receive(uint8_t *buf, uint32_t len);
+
 #endif /* USB_COMM_H */
