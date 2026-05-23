@@ -1,0 +1,57 @@
+# ================================================================
+# .gitignore for radioroc2_daq
+# STM32CubeIDE + Python project
+# ================================================================
+
+# --- STM32CubeIDE build outputs ---------------------------------
+Debug/
+Release/
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+*.su
+*.d
+*.o
+
+# --- STM32CubeIDE workspace settings ----------------------------
+.settings/
+.cproject
+.project
+*.launch
+
+# --- STM32CubeIDE generated linker script (keep .ld files) ------
+# (keep the .ld file — it's needed for building)
+
+# --- Windows ---------------------------------------------------
+Thumbs.db
+Desktop.ini
+
+# --- macOS -----------------------------------------------------
+.DS_Store
+.AppleDouble
+
+# --- Python ----------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# --- IDE (VSCode, PyCharm) -------------------------------------
+.vscode/
+.idea/
+
+# ================================================================
+# מה כן מועלה (לא בhashignore):
+#   - כל קבצי .c ו-.h שכתבנו
+#   - main.c, main.h (עם השינויים שלנו)
+#   - קובץ .ioc (הגדרות CubeMX)
+#   - קבצי Python
+#   - README.md
+# ================================================================
