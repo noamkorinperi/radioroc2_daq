@@ -55,15 +55,16 @@ The RADIOROC2 DAQ system reads energy deposits from a radiation detector
 (CsI(Tl) scintillator + SiPM) using the **RADIOROC2** front-end ASIC.
 
 ```
-┌─────────────┐   SiPM signal    ┌────────────┐  I2C + GPIO  ┌──────────────┐
-│ CsI(Tl)     │ ────────────────▶│ RADIOROC2  │◀────────────▶│ STM32F722ZE  │
-│ Scintillator│                  │   ASIC     │              │ (Nucleo-F722)│
-└─────────────┘                  └────────────┘              └──────┬───────┘
-                                       │                            │
-                               Analog MUX output             USB CDC (VCP)
-                               (OUT_AMUXHG / LG)                    │
-                                       │                     ┌──────▼───────┐
-                                       └──ADC1/ADC2──────────│  PC Python   │
+┌─────────────┐  SiPM signal   ┌────────────┐  I2C + GPIO   ┌──────────────┐
+│ CsI(Tl)     │ ──────────────▶│ RADIOROC2  │◀─────────────▶│ STM32F722ZE  │
+│ Scintillator│                │   ASIC     │OUT_AMUXHG/LG  │ (Nucleo-F722)│
+└─────────────┘                └────────────┘──────────────▶│  ADC1/ADC2   │
+                                                             └──────┬───────┘
+                                                                    │
+                                                              USB CDC (VCP)
+                                                                    │
+                                                             ┌──────▼───────┐
+                                                             │  PC Python   │
                                                              │  Application │
                                                              └──────────────┘
 ```
