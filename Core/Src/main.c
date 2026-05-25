@@ -30,6 +30,7 @@
 #include "daq.h"
 #include "compensation.h"
 #include "usb_comm.h"
+#include "main_app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
